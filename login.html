@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Whisk & Whimsy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Unified header */
+    .site-header{background:rgba(0,0,0,0.9);padding:15px 50px;border-bottom:1px solid rgba(255,215,0,0.3);position:sticky;top:0;z-index:100}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+    .logo-container{display:flex;align-items:center;gap:12px}
+    .logo-container img{width:50px;height:50px;border-radius:50%;border:2px solid gold;object-fit:cover}
+    .site-title{font-size:1.4em;font-weight:700;background:linear-gradient(90deg,#ffd700,#fff3b0);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;color:inherit}
+    .header-nav{display:flex;align-items:center;gap:12px}
+    .header-nav .nav-link{color:#ffd700;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600}
+    .cart-btn{background:transparent;border:1px solid transparent;cursor:pointer;font-size:1em;color:#ffd700;padding:8px 12px;border-radius:8px}
+    .cart-btn span{background:gold;color:#000;border-radius:999px;padding:2px 6px;margin-left:6px;font-weight:700}
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #000, #0a0a0a);
+      color: #ffd700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 15px;
+      padding: 40px;
+      width: 350px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+    }
+
+    h1 {
+      font-size: 1.8em;
+      font-weight: 600;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #fff6b7, #ffd700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffd700;
+      font-size: 1em;
+    }
+
+    input::placeholder {
+      color: rgba(255, 215, 0, 0.6);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ffd700, #ffcc33);
+      color: black;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .signup {
+      margin-top: 15px;
+      color: #fff;
+      font-size: 0.9em;
+    }
+
+    .signup a {
+      color: #ffd700;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Whisk & Whimsy</h1>
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email Address" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="login()">Login</button>
+
+    <p class="signup">
+      Don't have an account? <a href="signup.html">Sign up</a>
+    </p>
+  </div>
+
+  <script>
+    function login() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!email || !password) {
+        showPopup("Please fill in both fields.");
+        return;
+      }
+
+      // Sample accounts
+      const adminAccount = { email: "admin@whiskandwhimsy.com", password: "admin123" };
+      const staffAccount = { email: "staff@whiskandwhimsy.com", password: "staff123" };
+
+      // Fetch customer accounts from signup
+      const customers = JSON.parse(localStorage.getItem("customers")) || [];
+      const customer = customers.find(u => u.email === email && u.password === password);
+
+      let userType = "";
+      let redirectPage = "";
+      let displayName = email.split('@')[0]; // Use part before @ for display
+
+      if (email === adminAccount.email && password === adminAccount.password) {
+        userType = "Admin";
+        redirectPage = "admin.html";
+        displayName = "Admin";
+      } else if (email === staffAccount.email && password === staffAccount.password) {
+        userType = "Staff";
+        redirectPage = "staff.html";
+        displayName = "Staff";
+      } else if (customer) {
+        userType = "Customer";
+        redirectPage = "shop.html";
+      } else {
+        showPopup("Invalid email or password.");
+        return;
+      }
+
+      // Save login history
+      const loginHistory = JSON.parse(localStorage.getItem("loginHistory")) || [];
+      loginHistory.push({
+        username: email + " (" + userType + ")",
+        time: new Date().toLocaleString()
+      });
+      localStorage.setItem("loginHistory", JSON.stringify(loginHistory));
+      
+      // Save current user so other pages can check login state
+      const currentUser = { email, userType };
+      if (customer) {
+        currentUser.contactNumber = customer.contactNumber || '';
+      }
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+      showPopup("Welcome back, " + displayName + "!");
+      window.location.href = redirectPage;
+    }
+  </script>
+</body>
+  <!-- Popup Modal -->
+  <div id="popupModal" class="popup-modal">
+    <div class="popup-content">
+      <span id="popupMessage"></span>
+      <button class="popup-close" onclick="closePopup()">OK</button>
+    </div>
+  </div>
+  <style>
+    .popup-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.45);
+      justify-content: center; align-items: center;
+    }
+    .popup-modal.active { display: flex; }
+    .popup-content {
+      background: #181818;
+      color: #ffd700;
+      border-radius: 12px;
+      padding: 32px 28px 20px 28px;
+      min-width: 260px;
+      max-width: 90vw;
+      box-shadow: 0 4px 32px rgba(255,215,0,0.15);
+      text-align: center;
+      font-size: 1.1em;
+      position: relative;
+    }
+    .popup-close {
+      margin-top: 18px;
+      background: linear-gradient(90deg,#ffd700,#ffcc33);
+      color: #222;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .popup-close:hover { background: linear-gradient(90deg,#ffcc33,#ffd700); }
+  </style>
+  <script>
+    function showPopup(msg) {
+      document.getElementById('popupMessage').textContent = msg;
+      document.getElementById('popupModal').classList.add('active');
+    }
+    function closePopup() {
+      document.getElementById('popupModal').classList.remove('active');
+    }
+  </script>
+</html>

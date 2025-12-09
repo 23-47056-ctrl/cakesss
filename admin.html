@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - Whisk & Whimsy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Unified header */
+    .site-header{background:rgba(0,0,0,0.9);padding:15px 50px;border-bottom:1px solid rgba(255,215,0,0.3);position:sticky;top:0;z-index:100}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+    .logo-container{display:flex;align-items:center;gap:12px}
+    .logo-container img{width:50px;height:50px;border-radius:50%;border:2px solid gold;object-fit:cover}
+    .site-title{font-size:1.4em;font-weight:700;background:linear-gradient(90deg,#ffd700,#fff3b0);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;color:inherit}
+    .header-nav{display:flex;align-items:center;gap:12px}
+    .header-nav .nav-link{color:#ffd700;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600}
+    .cart-btn{background:transparent;border:1px solid transparent;cursor:pointer;font-size:1em;color:#ffd700;padding:8px 12px;border-radius:8px}
+    .cart-btn span{background:gold;color:#000;border-radius:999px;padding:2px 6px;margin-left:6px;font-weight:700}
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #0a0a0a, #000);
+      color: #ffd700;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      padding: 15px 60px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 0 2px 15px rgba(255, 215, 0, 0.15);
+      z-index: 1000;
+      box-sizing: border-box;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    header h1 {
+      font-size: 1.8em;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, #fff6b7, #ffd700);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .logout-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 18px;
+      text-decoration: none;
+      color: black;
+      background: linear-gradient(90deg, #ffd700, #ffcc33);
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      white-space: nowrap;
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 18px rgba(255, 215, 0, 0.18);
+    }
+
+    .dashboard {
+      padding: 130px 50px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      color: #fff3b0;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      color: #fff3b0;
+      margin: 20px 0 10px 0;
+    }
+
+    .admin-section {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+      clear: both;
+      overflow: hidden;
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .grid-section {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+      height: fit-content;
+    }
+
+    input, button, select {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      font-family: "Poppins";
+    }
+
+    input[type="text"], input[type="number"] {
+      width: 200px;
+    }
+
+    input[type="file"] {
+      background-color: rgba(255, 215, 0, 0.1);
+      color: #ffd700;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 8px;
+      cursor: pointer;
+      width: 200px;
+    }
+
+    button {
+      background: linear-gradient(90deg, #ffd700, #ffcc33);
+      color: black;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #ffd700;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      padding: 12px 8px;
+      text-align: left;
+    }
+
+    th {
+      color: #fff3b0;
+      background: rgba(255, 215, 0, 0.05);
+      position: sticky;
+      top: 0;
+    }
+
+    tr:hover {
+      background: rgba(255, 215, 0, 0.03);
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 0.9em;
+      color: rgba(255, 215, 0, 0.8);
+      margin-top: 60px;
+      clear: both;
+    }
+
+    /* Analytics Styles */
+    .analytics-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .analytics-card {
+      background: rgba(255, 215, 0, 0.08);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .analytics-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 215, 0, 0.12);
+    }
+
+    .card-icon {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 0.9em;
+      opacity: 0.8;
+      margin-bottom: 5px;
+    }
+
+    .card-value {
+      font-size: 2em;
+      font-weight: 700;
+      margin: 10px 0;
+      color: #fff3b0;
+    }
+
+    .card-change {
+      font-size: 0.85em;
+      padding: 3px 8px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .positive {
+      background: rgba(0, 200, 83, 0.2);
+      color: #4caf50;
+    }
+
+    .negative {
+      background: rgba(244, 67, 54, 0.2);
+      color: #f44336;
+    }
+
+    .analytics-chart {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid rgba(255, 215, 0, 0.1);
+    }
+
+    .chart-container {
+      height: 300px;
+      position: relative;
+    }
+
+    .chart-bar {
+      display: flex;
+      align-items: flex-end;
+      height: 250px;
+      margin-top: 20px;
+      gap: 20px;
+      justify-content: center;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+
+    .bar {
+      width: 40px;
+      min-width: 40px;
+      background: linear-gradient(to top, #ffd700, #ffcc33);
+      border-radius: 4px 4px 0 0;
+      position: relative;
+      transition: height 0.3s ease;
+    }
+
+    .bar:hover {
+      opacity: 0.8;
+    }
+
+    .bar-label {
+      position: absolute;
+      bottom: -25px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.8em;
+      color: rgba(255, 215, 0, 0.8);
+      white-space: nowrap;
+    }
+
+    .bar-value {
+      position: absolute;
+      top: -25px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-weight: 600;
+      color: #fff3b0;
+    }
+
+    .analytics-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+
+    .time-filter {
+      padding: 8px 15px;
+      border-radius: 8px;
+      background: rgba(255, 215, 0, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      color: #ffd700;
+      font-family: "Poppins";
+      cursor: pointer;
+      min-width: 150px;
+    }
+
+    .refresh-btn {
+      background: transparent;
+      border: 1px solid #ffd700;
+      color: #ffd700;
+    }
+
+    .refresh-btn:hover {
+      background: rgba(255, 215, 0, 0.1);
+    }
+
+    .top-products {
+      margin-top: 30px;
+    }
+
+    .product-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 215, 0, 0.1);
+    }
+
+    .product-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .product-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .product-stats {
+      text-align: right;
+    }
+
+    .sales-count {
+      font-weight: 600;
+      color: #fff3b0;
+    }
+
+    .revenue-amount {
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .dashboard {
+        padding: 130px 30px 40px;
+      }
+      
+      header {
+        padding: 15px 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        padding: 130px 20px 30px;
+      }
+      
+      header {
+        padding: 12px 20px;
+      }
+      
+      header h1 {
+        font-size: 1.5em;
+      }
+      
+      .admin-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      input[type="text"], input[type="number"], input[type="file"] {
+        width: 100%;
+        margin-right: 0;
+      }
+      
+      .analytics-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .analytics-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .analytics-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .time-filter, .refresh-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <h1>Whisk & Whimsy</h1>
+    </div>
+    <div class="header-right">
+      <a href="login.html" class="logout-btn">⎋ Logout</a>
+    </div>
+  </header>
+
+  <div class="dashboard">
+    <!-- Analytics Section -->
+    <div class="admin-section">
+      <h2>📊 Sales Analytics</h2>
+      
+      <div class="analytics-controls">
+        <select class="time-filter" id="timeRange" onchange="loadAnalytics()">
+          <option value="7">Last 7 Days</option>
+          <option value="30" selected>Last 30 Days</option>
+          <option value="90">Last 90 Days</option>
+          <option value="365">Last Year</option>
+        </select>
+        <button class="refresh-btn" onclick="refreshAnalytics()">🔄 Refresh</button>
+        <button onclick="exportAnalytics()">📊 Export Data</button>
+      </div>
+
+      <!-- Analytics Cards -->
+      <div class="analytics-cards">
+        <div class="analytics-card">
+          <div class="card-icon">💰</div>
+          <div class="card-title">Total Revenue</div>
+          <div class="card-value" id="totalRevenue">₱0</div>
+          <div class="card-change positive" id="revenueChange">+0%</div>
+        </div>
+        
+        <div class="analytics-card">
+          <div class="card-icon">🛒</div>
+          <div class="card-title">Total Purchases</div>
+          <div class="card-value" id="totalPurchases">0</div>
+          <div class="card-change positive" id="purchasesChange">+0%</div>
+        </div>
+        
+        <div class="analytics-card">
+          <div class="card-icon">📦</div>
+          <div class="card-title">Products Sold</div>
+          <div class="card-value" id="productsSold">0</div>
+          <div class="card-change positive" id="productsChange">+0%</div>
+        </div>
+        
+        <div class="analytics-card">
+          <div class="card-icon">👥</div>
+          <div class="card-title">Active Customers</div>
+          <div class="card-value" id="activeCustomers">0</div>
+          <div class="card-change positive" id="customersChange">+0%</div>
+        </div>
+      </div>
+
+      <!-- Revenue Chart -->
+      <div class="analytics-chart">
+        <h3>Revenue Trend</h3>
+        <div class="chart-container">
+          <div class="chart-bar" id="revenueChart">
+            <!-- Chart bars will be generated by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Products -->
+      <div class="top-products">
+        <h3>🔥 Top Selling Products</h3>
+        <div id="topProducts">
+          <!-- Top products will be generated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid Layout for Product Management and Login History -->
+    <div class="admin-grid">
+      <!-- Product Management Section -->
+      <div class="grid-section">
+        <h2>Product Management</h2>
+        
+        <div class="form-group">
+          <div class="form-row">
+            <input type="text" id="prodName" placeholder="Product Name" />
+            <input type="number" id="prodPrice" placeholder="Price (₱)" />
+          </div>
+          <div class="form-row">
+            <input type="file" id="prodImage" accept="image/*" />
+            <button onclick="addProduct()">Add Product</button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table id="productTable">
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Sales</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Login History Section -->
+      <div class="grid-section">
+        <h2>Login History</h2>
+        <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px;">
+          <button onclick="clearLoginHistory()" style="background:#ff4d4d;padding:8px 12px;border-radius:8px;color:#fff;border:none;">Clear All</button>
+          <span style="color:rgba(255,215,0,0.9);font-size:0.95em;">View recent sign-ins and remove entries if needed.</span>
+        </div>
+        <div class="table-container">
+          <table id="loginTable">
+            <tr>
+              <th>Username / Email</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </table>
+        </div>
+        
+        <!-- Recent Orders -->
+        <h3>Recent Orders</h3>
+        <div class="table-container">
+          <table id="orderTable">
+            <tr>
+              <th>Order ID</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 <strong>Whisk & Whimsy</strong> — Admin Dashboard</p>
+    <p>Last updated: <span id="lastUpdated"></span></p>
+  </footer>
+
+  <script>
+    // Initialize analytics data
+    let analyticsData = {
+      totalRevenue: 0,
+      totalPurchases: 0,
+      productsSold: 0,
+      activeCustomers: 0,
+      revenueData: [],
+      topProducts: []
+    };
+
+    // --- PRODUCT MANAGEMENT (Enhanced with sales tracking) ---
+    let products = JSON.parse(localStorage.getItem("products")) || [];
+
+    function displayProducts() {
+      const table = document.getElementById("productTable");
+      table.innerHTML = `
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Sales</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      `;
+      
+      products.forEach((p, i) => {
+        const sales = p.sales || 0;
+        table.innerHTML += `
+          <tr>
+            <td>${p.name}</td>
+            <td>₱${p.price}</td>
+            <td>${sales}</td>
+            <td><img src="${p.image || ''}" width="40" style="border-radius:6px;" alt="${p.name}"></td>
+            <td>
+              <button onclick="removeProduct(${i})" style="padding: 5px 10px; font-size: 0.9em; margin: 2px;">Remove</button>
+              <button onclick="addSale(${i})" style="padding: 5px 10px; font-size: 0.9em; margin: 2px; background:#4caf50">+1 Sale</button>
+            </td>
+          </tr>`;
+      });
+    }
+
+    function addProduct() {
+      const name = document.getElementById("prodName").value.trim();
+      const price = document.getElementById("prodPrice").value;
+      const fileInput = document.getElementById("prodImage");
+      const file = fileInput.files[0];
+
+      if (!name || !price) {
+        showPopup("Please fill in product name and price.");
+        return;
+      }
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const imageBase64 = e.target.result;
+          products.push({ 
+            name, 
+            price, 
+            image: imageBase64,
+            sales: 0
+          });
+          localStorage.setItem("products", JSON.stringify(products));
+          displayProducts();
+          loadAnalytics();
+          showPopup("Product added successfully!");
+          clearProductForm();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        products.push({ 
+          name, 
+          price, 
+          image: "",
+          sales: 0
+        });
+        localStorage.setItem("products", JSON.stringify(products));
+        displayProducts();
+        loadAnalytics();
+        showPopup("Product added successfully!");
+        clearProductForm();
+      }
+    }
+
+    function clearProductForm() {
+      document.getElementById("prodName").value = '';
+      document.getElementById("prodPrice").value = '';
+      document.getElementById("prodImage").value = '';
+    }
+
+    function removeProduct(i) {
+      if (confirm("Are you sure you want to remove this product?")) {
+        products.splice(i, 1);
+        localStorage.setItem("products", JSON.stringify(products));
+        displayProducts();
+        loadAnalytics();
+        showPopup("Product removed successfully!");
+      }
+    }
+
+    function addSale(productIndex) {
+      if (products[productIndex]) {
+        products[productIndex].sales = (products[productIndex].sales || 0) + 1;
+        localStorage.setItem("products", JSON.stringify(products));
+        displayProducts();
+        loadAnalytics();
+        showPopup("Sale recorded for " + products[productIndex].name);
+      }
+    }
+
+    // --- ANALYTICS FUNCTIONS ---
+    function loadAnalytics() {
+      const days = parseInt(document.getElementById('timeRange').value);
+      generateAnalyticsData(days);
+      updateAnalyticsCards();
+      renderRevenueChart();
+      displayTopProducts();
+      updateLastUpdated();
+    }
+
+    function generateAnalyticsData(days = 30) {
+      // Calculate analytics from product data
+      let totalRevenue = 0;
+      let totalPurchases = 0;
+      let productsSold = 0;
+      
+      // Calculate from product sales
+      products.forEach(product => {
+        const sales = product.sales || 0;
+        const price = parseFloat(product.price) || 0;
+        productsSold += sales;
+        totalRevenue += sales * price;
+      });
+
+      // Count purchases (simplified - each product sale is a purchase)
+      totalPurchases = products.reduce((sum, product) => sum + (product.sales || 0), 0);
+
+      // Generate revenue trend data
+      const revenueData = [];
+      const today = new Date();
+      for (let i = days - 1; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        
+        // Simulate daily revenue
+        const dailyRevenue = Math.floor(Math.random() * 10000) + 1000;
+        revenueData.push({
+          date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          value: dailyRevenue
+        });
+      }
+
+      // Get top products
+      const topProducts = [...products]
+        .sort((a, b) => (b.sales || 0) - (a.sales || 0))
+        .slice(0, 5);
+
+      analyticsData = {
+        totalRevenue,
+        totalPurchases,
+        productsSold,
+        activeCustomers: Math.floor(Math.random() * 50) + 10,
+        revenueData,
+        topProducts
+      };
+
+      // Store in localStorage
+      localStorage.setItem('analyticsData', JSON.stringify(analyticsData));
+      localStorage.setItem('lastAnalyticsUpdate', new Date().toISOString());
+    }
+
+    function updateAnalyticsCards() {
+      // Update card values
+      document.getElementById('totalRevenue').textContent = `₱${analyticsData.totalRevenue.toLocaleString()}`;
+      document.getElementById('totalPurchases').textContent = analyticsData.totalPurchases.toLocaleString();
+      document.getElementById('productsSold').textContent = analyticsData.productsSold.toLocaleString();
+      document.getElementById('activeCustomers').textContent = analyticsData.activeCustomers.toLocaleString();
+
+      // Simulate percentage changes
+      const changes = {
+        revenue: Math.floor(Math.random() * 30) + 5,
+        purchases: Math.floor(Math.random() * 25) + 3,
+        products: Math.floor(Math.random() * 20) + 2,
+        customers: Math.floor(Math.random() * 15) + 1
+      };
+
+      document.getElementById('revenueChange').textContent = `+${changes.revenue}%`;
+      document.getElementById('purchasesChange').textContent = `+${changes.purchases}%`;
+      document.getElementById('productsChange').textContent = `+${changes.products}%`;
+      document.getElementById('customersChange').textContent = `+${changes.customers}%`;
+    }
+
+    function renderRevenueChart() {
+      const chartContainer = document.getElementById('revenueChart');
+      chartContainer.innerHTML = '';
+
+      if (analyticsData.revenueData.length === 0) return;
+
+      const maxValue = Math.max(...analyticsData.revenueData.map(d => d.value));
+      
+      analyticsData.revenueData.forEach(data => {
+        const barHeight = Math.max((data.value / maxValue) * 200, 10);
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.height = barHeight + 'px';
+        bar.innerHTML = `
+          <div class="bar-value">₱${(data.value/1000).toFixed(1)}K</div>
+          <div class="bar-label">${data.date}</div>
+        `;
+        chartContainer.appendChild(bar);
+      });
+    }
+
+    function displayTopProducts() {
+      const container = document.getElementById('topProducts');
+      container.innerHTML = '';
+
+      if (analyticsData.topProducts.length === 0) {
+        container.innerHTML = '<p style="text-align: center; opacity: 0.7;">No sales data available</p>';
+        return;
+      }
+
+      analyticsData.topProducts.forEach(product => {
+        const sales = product.sales || 0;
+        const revenue = sales * (parseFloat(product.price) || 0);
+        
+        const productItem = document.createElement('div');
+        productItem.className = 'product-item';
+        productItem.innerHTML = `
+          <div class="product-info">
+            ${product.image ? `<img src="${product.image}" class="product-image" alt="${product.name}">` : ''}
+            <div>
+              <strong>${product.name}</strong><br>
+              <small>₱${product.price} each</small>
+            </div>
+          </div>
+          <div class="product-stats">
+            <div class="sales-count">${sales} sold</div>
+            <div class="revenue-amount">₱${revenue.toFixed(2)}</div>
+          </div>
+        `;
+        container.appendChild(productItem);
+      });
+    }
+
+    function refreshAnalytics() {
+      const days = parseInt(document.getElementById('timeRange').value);
+      generateAnalyticsData(days);
+      updateAnalyticsCards();
+      renderRevenueChart();
+      displayTopProducts();
+      showPopup('Analytics refreshed successfully!');
+    }
+
+    function exportAnalytics() {
+      const dataStr = JSON.stringify(analyticsData, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+      
+      const exportFileDefaultName = `whisk-whimsy-analytics-${new Date().toISOString().split('T')[0]}.json`;
+      
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', exportFileDefaultName);
+      linkElement.click();
+      
+      showPopup('Analytics data exported successfully!');
+    }
+
+    function updateLastUpdated() {
+      const lastUpdate = localStorage.getItem('lastAnalyticsUpdate') || new Date().toISOString();
+      const date = new Date(lastUpdate);
+      document.getElementById('lastUpdated').textContent = date.toLocaleString();
+    }
+
+    // --- LOGIN HISTORY DISPLAY ---
+    function displayLoginHistory() {
+      const table = document.getElementById("loginTable");
+      const loginHistory = JSON.parse(localStorage.getItem("loginHistory")) || [];
+      table.innerHTML = `
+        <tr>
+          <th>Username / Email</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      `;
+
+      if (loginHistory.length === 0) {
+        // Show sample data (read-only)
+         sampleLogins = [
+          { username: "admin", time: "2025-04-15 09:30:22", status: "Success" },
+          { usernconstame: "manager", time: "2025-04-14 14:45:11", status: "Success" },
+          { username: "admin", time: "2025-04-13 16:20:45", status: "Success" },
+          { username: "baker", time: "2025-04-13 07:30:15", status: "Success" }
+        ];
+        sampleLogins.forEach(entry => {
+          table.innerHTML += `
+            <tr>
+              <td>${entry.username}</td>
+              <td>${entry.time}</td>
+              <td><span class="${entry.status.toLowerCase()}">${entry.status}</span></td>
+              <td style="opacity:0.5">—</td>
+            </tr>`;
+        });
+      } else {
+        // Render stored history with remove action
+        loginHistory.slice().reverse().forEach((entry, revIndex) => {
+          const originalIndex = loginHistory.length - 1 - revIndex;
+          table.innerHTML += `
+            <tr>
+              <td>${entry.username || entry.email || ''}</td>
+              <td>${entry.time}</td>
+              <td><span class="${(entry.status || 'success').toLowerCase()}">${entry.status || 'Success'}</span></td>
+              <td><button onclick="removeLoginEntry(${originalIndex})" style="background:#ff6868;color:#fff;border:none;padding:6px 10px;border-radius:6px;">Remove</button></td>
+            </tr>`;
+        });
+      }
+    }
+
+    function removeLoginEntry(index) {
+      const loginHistory = JSON.parse(localStorage.getItem('loginHistory')) || [];
+      if (!loginHistory[index]) return;
+      const confirmed = confirm('Remove this login entry?');
+      if (!confirmed) return;
+      loginHistory.splice(index, 1);
+      localStorage.setItem('loginHistory', JSON.stringify(loginHistory));
+      displayLoginHistory();
+      showPopup('Login entry removed.');
+    }
+
+    function clearLoginHistory() {
+      const confirmed = confirm('Clear all login history? This action cannot be undone.');
+      if (!confirmed) return;
+      localStorage.removeItem('loginHistory');
+      displayLoginHistory();
+      showPopup('Login history cleared.');
+    }
+
+    // --- RECENT ORDERS ---
+    function displayRecentOrders() {
+      const table = document.getElementById("orderTable");
+      table.innerHTML = `
+        <tr>
+          <th>Order ID</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      `;
+
+      // Sample orders data
+      const sampleOrders = [
+        { id: 'ORD-001', amount: 1250.75, status: 'Completed' },
+        { id: 'ORD-002', amount: 850.50, status: 'Processing' },
+        { id: 'ORD-003', amount: 2100.00, status: 'Completed' },
+        { id: 'ORD-004', amount: 450.25, status: 'Pending' },
+        { id: 'ORD-005', amount: 1750.00, status: 'Completed' }
+      ];
+
+      sampleOrders.forEach(order => {
+        table.innerHTML += `
+          <tr>
+            <td>${order.id}</td>
+            <td>₱${order.amount.toFixed(2)}</td>
+            <td><span class="${order.status.toLowerCase()}">${order.status}</span></td>
+          </tr>`;
+      });
+    }
+
+    // --- POPUP FUNCTIONS ---
+    function showPopup(msg) {
+      document.getElementById('popupMessage').textContent = msg;
+      document.getElementById('popupModal').classList.add('active');
+    }
+
+    function closePopup() {
+      document.getElementById('popupModal').classList.remove('active');
+    }
+
+    // --- INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load existing data or initialize
+      if (!localStorage.getItem('products')) {
+        localStorage.setItem('products', JSON.stringify([]));
+      }
+      
+      if (!localStorage.getItem('loginHistory')) {
+        localStorage.setItem('loginHistory', JSON.stringify([]));
+      }
+
+      // Initialize displays
+      displayProducts();
+      displayLoginHistory();
+      displayRecentOrders();
+      loadAnalytics(); // Load analytics on page load
+    });
+  </script>
+
+  <!-- Popup Modal -->
+  <div id="popupModal" class="popup-modal">
+    <div class="popup-content">
+      <span id="popupMessage"></span>
+      <button class="popup-close" onclick="closePopup()">OK</button>
+    </div>
+  </div>
+  <style>
+    .popup-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.45);
+      justify-content: center; align-items: center;
+    }
+    .popup-modal.active { display: flex; }
+    .popup-content {
+      background: #181818;
+      color: #ffd700;
+      border-radius: 12px;
+      padding: 32px 28px 20px 28px;
+      min-width: 260px;
+      max-width: 90vw;
+      box-shadow: 0 4px 32px rgba(255,215,0,0.15);
+      text-align: center;
+      font-size: 1.1em;
+      position: relative;
+    }
+    .popup-close {
+      margin-top: 18px;
+      background: linear-gradient(90deg,#ffd700,#ffcc33);
+      color: #222;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .popup-close:hover { background: linear-gradient(90deg,#ffcc33,#ffd700); }
+
+    /* Status badges */
+    .success { color: #4caf50; }
+    .failed { color: #f44336; }
+    .pending { color: #ff9800; }
+    .processing { color: #2196f3; }
+    .completed { color: #4caf50; }
+  </style>
+</body>
+</html>

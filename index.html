@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Cakes - Whisk & Whimsy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Unified header */
+    .site-header{
+      background: rgba(0,0,0,0.9);
+      padding: 15px 50px;
+      border-bottom: 1px solid rgba(255,215,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto;}
+    .logo-container{display:flex;align-items:center;gap:12px;}
+    .logo-container img{width:50px;height:50px;border-radius:50%;border:2px solid gold;object-fit:cover;}
+    .site-title{font-size:1.4em;font-weight:700;background:linear-gradient(90deg,#ffd700,#fff3b0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;color:inherit}
+    .header-nav{display:flex;align-items:center;gap:12px}
+    .header-nav .nav-link{color:#ffd700;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;background:transparent;border:1px solid transparent}
+    .header-nav .nav-link:hover{background:gold;color:#000;transform:scale(1.02)}
+    .cart-btn{background:transparent;border:1px solid transparent;cursor:pointer;font-size:1em;color:#ffd700;padding:8px 12px;border-radius:8px}
+    .cart-btn span{background:gold;color:#000;border-radius:999px;padding:2px 6px;margin-left:6px;font-weight:700}
+    @media (max-width:700px){.header-inner{padding:0 12px}.header-nav{gap:6px}.site-title{font-size:1.1em}.logo-container img{width:42px;height:42px}}
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #0a0a0a, #000);
+      color: #ffd700;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    header {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo img {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: 2px solid gold;
+      object-fit: cover;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+
+    .logo h1 {
+      font-size: 2em;
+      background: linear-gradient(90deg, #ffd700, #fff3b0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .logo p {
+      font-size: 0.9em;
+      color: rgba(255, 215, 0, 0.8);
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    .header-btn a {
+      text-decoration: none;
+      color: black;
+      background: linear-gradient(90deg, #ffd700, #ffcc33);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .header-btn a:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, #ffcc33, #ffd700);
+    }
+
+    /* Luxury Menu Grid */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  padding: 60px 80px;
+  background: radial-gradient(circle at top, #0a0a0a, #000);
+}
+
+.menu-item {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 18px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+  transition: all 0.4s ease;
+  backdrop-filter: blur(3px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.menu-img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.1);
+}
+
+.menu-item h3 {
+  margin-top: 12px;
+  margin-bottom: 5px;
+  font-size: 0.95em;
+  color: #fff6b7;
+  letter-spacing: 0.5px;
+}
+
+.menu-item p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.75em;
+  margin: 3px 0;
+  line-height: 1.3;
+  display: none;
+}
+
+.price {
+  color: #ffd700;
+  font-weight: 700;
+  font-size: 0.95em;
+  margin-top: 8px;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+
+    /* Map Section */
+    .map-section {
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border-top: 1px solid rgba(255, 215, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .map-section h2 {
+      color: #fff6b7;
+      margin-bottom: 20px;
+    }
+
+    iframe {
+      border: none;
+      width: 90%;
+      height: 400px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      color: rgba(255, 215, 0, 0.85);
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 0.9em;
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .contact-info {
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    .contact-info strong {
+      color: #fff6b7;
+    }
+
+    /* About Us Section */
+    .about-section {
+      background: radial-gradient(circle at center, rgba(255, 215, 0, 0.05), #000);
+      padding: 80px 50px;
+      border-top: 1px solid rgba(255, 215, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .about-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 50px;
+    }
+
+    .about-content {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+
+    .about-content h2 {
+      font-size: 2.2em;
+      color: #fff6b7;
+      margin-bottom: 0;
+      letter-spacing: 0.5px;
+    }
+
+    .about-text {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .about-text p {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1em;
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .about-highlights {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .highlight-item {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+      transition: all 0.3s ease;
+      align-items: center;
+    }
+
+    .highlight-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+      border-color: rgba(255, 215, 0, 0.4);
+    }
+
+    .highlight-icon {
+      color: #ffd700;
+      font-size: 2.5em;
+      min-width: auto;
+    }
+
+    .highlight-item h3 {
+      color: #fff6b7;
+      margin: 0;
+      font-size: 1.1em;
+    }
+
+    .highlight-item p {
+      color: rgba(255, 255, 255, 0.75);
+      margin: 0;
+      font-size: 0.95em;
+      line-height: 1.5;
+    }
+
+    .about-image {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .about-image-frame {
+      width: 280px;
+      height: 280px;
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 4em;
+      color: rgba(255, 215, 0, 0.3);
+    }
+
+    @media (max-width: 1024px) {
+      .about-highlights {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .about-section {
+        padding: 50px 20px;
+      }
+
+      .about-highlights {
+        grid-template-columns: 1fr;
+      }
+
+      .about-content h2 {
+        font-size: 1.8em;
+      }
+
+      .about-image-frame {
+        width: 200px;
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-container">
+        <a href="index.html"><img src="LOGO.jpg" alt="Whisk & Whimsy Logo"></a>
+        <a href="index.html" class="site-title">Whisk & Whimsy ✨</a>
+      </div>
+      <nav class="header-nav">
+        <a href="shop.html" class="nav-link">Buy Now</a>
+        <a href="login.html" class="nav-link auth-link">Log Out</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Cake Menu Section -->
+<section id="menu" class="menu-grid">
+  <div class="menu-item">
+    <img src="Black Forest.jpg" alt="Black Forest Cake" class="menu-img">
+    <h3>Black Forest Cake</h3>
+    <p>Rich chocolate layers filled with whipped cream and cherry filling, finished with dark chocolate shavings.</p>
+    <p class="price">₱950</p>
+  </div>
+
+  <div class="menu-item">
+    <img src="Red velvet.jpg" alt="Red Velvet Cake" class="menu-img">
+    <h3>Red Velvet Cake</h3>
+    <p>Elegant crimson sponge with a smooth cream cheese frosting and subtle cocoa undertones.</p>
+    <p class="price">₱899</p>
+  </div>
+
+  <div class="menu-item">
+    <img src="Mocha Cake.jpg" alt="Mocha Cake" class="menu-img">
+    <h3>Mocha Cake</h3>
+    <p>Perfect harmony of coffee and chocolate in soft sponge layers topped with mocha buttercream.</p>
+    <p class="price">₱920</p>
+  </div>
+
+  <div class="menu-item">
+    <img src="Vanilla.jpg" alt="Mocha Cake" class="menu-img">
+    <h3>Vanilla Sponge</h3>
+    <p>A timeless classic — soft, buttery vanilla sponge layered with silky whipped cream and a hint of golden sweetness. Pure elegance in every bite.</p>
+    <p class="price">₱920</p>
+  </div>
+
+  <div class="menu-item">
+    <img src="Coffee Cake.jpg" alt="Coffee Cake" class="menu-img">
+    <h3>Coffee Cake</h3>
+    <p>Moist espresso-infused cake with creamy coffee filling, perfect for true coffee lovers.</p>
+    <p class="price">₱890</p>
+  </div>
+
+  <div class="menu-item">
+    <img src="Devil's.jpg" alt="Coffee Cake" class="menu-img">
+    <h3>Devil's Cake</h3>
+    <p>Deep, dark, and indulgent — a rich chocolate masterpiece with moist layers and smooth fudge frosting that tempts every chocolate lover.</p>
+    <p class="price">₱890</p>
+  </div>
+
+  <div class="menu-item">
+    <img src="Chiffon.jpg" alt="Chiffon Cake" class="menu-img">
+    <h3>Chiffon Cake</h3>
+    <p>Light, fluffy, and golden — a soft classic cake with a smooth, buttery finish.</p>
+    <p class="price">₱870</p>
+  </div>
+
+  <div class="menu-item">
+    <img src="Choco Ferrero.jpg" alt="Choco Ferrero Cake" class="menu-img">
+    <h3>Choco Ferrero Cake</h3>
+    <p>Decadent chocolate cake infused with hazelnut cream, layered with crushed Ferrero Rocher pieces.</p>
+    <p class="price">₱990</p>
+  </div>
+</section>
+
+  <!-- About Us Section -->
+  <section class="about-section">
+    <div class="about-container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>About Whisk & Whimsy ✨</h2>
+          <p>Welcome to Whisk & Whimsy, where tradition meets innovation in every delicious bite. Since our founding, we've been dedicated to creating handcrafted, luxury cakes that celebrate life's most cherished moments.</p>
+          <p>Our passion is simple: to deliver exceptional quality, breathtaking flavors, and unforgettable experiences through the art of cake-making. Every cake that leaves our kitchen is a masterpiece, carefully crafted with premium ingredients and boundless creativity.</p>
+        </div>
+        
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <span class="highlight-icon">🎂</span>
+            <div>
+              <h3>Handcrafted Excellence</h3>
+              <p>Each cake is made fresh with precision and love, ensuring superior taste and quality.</p>
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <span class="highlight-icon">🌟</span>
+            <div>
+              <h3>Premium Ingredients</h3>
+              <p>We use only the finest ingredients to guarantee rich, authentic flavors in every slice.</p>
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <span class="highlight-icon">💝</span>
+            <div>
+              <h3>Special Occasions</h3>
+              <p>Whether it's a birthday, anniversary, or celebration, we create memories through our cakes.</p>
+            </div>
+          </div>
+
+          <div class="highlight-item">
+            <span class="highlight-icon">🚀</span>
+            <div>
+              <h3>Easy Ordering</h3>
+              <p>Our simple online ordering system makes it convenient to get your perfect cake delivered.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+  </section>
+
+  <!-- Map Section -->
+  <section class="map-section">
+    <h2>📍 Find Us in Gasang, Mabini, Batangas</h2>
+    <iframe
+      src="https://www.google.com/maps?q=Gasang,+Mabini,+Batangas&output=embed"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 <strong>Whisk & Whimsy</strong> — Handcrafted Luxury Cakes for Every Occasion.</p>
+    <div class="contact-info">
+      <p><strong>Email:</strong> whiskandwhimsy@gmail.com</p>
+      <p><strong>Address:</strong> Gasang, Mabini, Batangas, Philippines</p>
+      <p><strong>Phone:</strong> +63 912 345 6789</p>
+    </div>
+  </footer>
+</body>
+  <!-- Popup Modal -->
+  <div id="popupModal" class="popup-modal">
+    <div class="popup-content">
+      <span id="popupMessage"></span>
+      <button class="popup-close" onclick="closePopup()">OK</button>
+    </div>
+  </div>
+  <style>
+    .popup-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0; top: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.45);
+      justify-content: center; align-items: center;
+    }
+    .popup-modal.active { display: flex; }
+    .popup-content {
+      background: #181818;
+      color: #ffd700;
+      border-radius: 12px;
+      padding: 32px 28px 20px 28px;
+      min-width: 260px;
+      max-width: 90vw;
+      box-shadow: 0 4px 32px rgba(255,215,0,0.15);
+      text-align: center;
+      font-size: 1.1em;
+      position: relative;
+    }
+    .popup-close {
+      margin-top: 18px;
+      background: linear-gradient(90deg,#ffd700,#ffcc33);
+      color: #222;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .popup-close:hover { background: linear-gradient(90deg,#ffcc33,#ffd700); }
+  </style>
+  <script>
+    function showPopup(msg) {
+      document.getElementById('popupMessage').textContent = msg;
+      document.getElementById('popupModal').classList.add('active');
+    }
+    function closePopup() {
+      document.getElementById('popupModal').classList.remove('active');
+    }
+  </script>
+</html>

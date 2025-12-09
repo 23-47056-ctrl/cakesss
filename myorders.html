@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Orders - Whisk & Whimsy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Unified header */
+    .site-header{background:rgba(0,0,0,0.9);padding:15px 50px;border-bottom:1px solid rgba(255,215,0,0.3);position:sticky;top:0;z-index:100}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+    .logo-container{display:flex;align-items:center;gap:12px}
+    .logo-container img{width:50px;height:50px;border-radius:50%;border:2px solid gold;object-fit:cover}
+    .site-title{font-size:1.4em;font-weight:700;background:linear-gradient(90deg,#ffd700,#fff3b0);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;color:inherit}
+    .header-nav{display:flex;align-items:center;gap:12px}
+    .header-nav .nav-link{color:#ffd700;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600}
+    .cart-btn{background:transparent;border:1px solid transparent;cursor:pointer;font-size:1em;color:#ffd700;padding:8px 12px;border-radius:8px}
+    .cart-btn span{background:gold;color:#000;border-radius:999px;padding:2px 6px;margin-left:6px;font-weight:700}
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at top, #0a0a0a, #000);
+      color: #ffd700;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 15px 50px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 0 2px 15px rgba(255, 215, 0, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      background: linear-gradient(90deg, #ffd700, #fff3b0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+
+    .back-btn {
+      background: transparent;
+      color: #ffd700;
+      border: 1px solid #ffd700;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background: gold;
+      color: black;
+      box-shadow: 0 0 10px gold;
+    }
+
+    .orders-container {
+      padding: 100px 50px;
+    }
+
+    h2 {
+      color: #fff3b0;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      color: #ffd700;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      padding: 10px 15px;
+      text-align: left;
+    }
+
+    th {
+      color: #fff3b0;
+      background: rgba(255, 215, 0, 0.1);
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.9);
+      color: rgba(255, 215, 0, 0.8);
+      text-align: center;
+      padding: 25px;
+      border-top: 1px solid rgba(255, 215, 0, 0.3);
+      font-size: 0.9em;
+    }
+
+    .status {
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    .status.pending { 
+      color: #ffa500; 
+      background: rgba(255, 165, 0, 0.2);
+    }
+    .status.preparing { 
+      color: #00bfff; 
+      background: rgba(0, 191, 255, 0.2);
+    }
+    .status.out\ for\ delivery {
+      color: #87ceeb;
+      background: rgba(135, 206, 235, 0.2);
+    }
+    .status.delivered { 
+      color: #00ff7f; 
+      background: rgba(0, 255, 127, 0.2);
+    }
+
+    .product-list {
+      background: rgba(255, 215, 0, 0.1);
+      padding: 8px;
+      border-radius: 5px;
+      margin: 5px 0;
+    }
+
+    .product-item {
+      color: #fff;
+      font-size: 0.9em;
+      padding: 4px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-container">
+        <a href="index.html"><img src="LOGO.jpg" alt="Whisk & Whimsy Logo"></a>
+        <a href="index.html" class="site-title">Whisk & Whimsy ✨</a>
+      </div>
+      <nav class="header-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="shop.html" class="nav-link">Shop</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="orders-container">
+    <h2>Order History</h2>
+    <table id="ordersTable">
+      <tr>
+        <th>Order ID</th>
+        <th>Items</th>
+        <th>Item Count</th>
+        <th>Total</th>
+        <th>Status</th>
+      </tr>
+    </table>
+  </div>
+
+  <footer>
+    © 2025 <strong>Whisk & Whimsy</strong> — Order Tracking Page
+  </footer>
+
+  <script>
+    function loadOrders() {
+      const orders = JSON.parse(localStorage.getItem("orders")) || [];
+      const table = document.getElementById("ordersTable");
+      
+      // Clear existing rows (except header)
+      while (table.rows.length > 1) {
+        table.deleteRow(1);
+      }
+
+      if (orders.length === 0) {
+        table.innerHTML += "<tr><td colspan='4' style='text-align: center; padding: 20px;'>📭 No orders found.</td></tr>";
+      } else {
+        orders.forEach((o) => {
+          const row = table.insertRow();
+          
+          // Order ID
+          const idCell = row.insertCell(0);
+          idCell.textContent = o.id;
+          
+          // Items with better formatting and item count
+          const itemsCell = row.insertCell(1);
+          const itemCountCell = row.insertCell(2);
+
+          let itemCount = 0;
+          const itemsHtml = (o.items || []).map(i => {
+            // if aggregated item with qty/subtotal
+            if (i.qty !== undefined) {
+              itemCount += Number(i.qty) || 0;
+              const priceStr = (i.subtotal !== undefined) ? `₱${Number(i.subtotal).toFixed(2)}` : (i.price ? `₱${Number(i.price).toFixed(2)}` : '₱0.00');
+              return `<div class="product-item">🍰 ${i.name} <small style="opacity:0.9">x${i.qty}</small> <strong>${priceStr}</strong></div>`;
+            }
+            // fallback: simple item
+            itemCount += 1;
+            return `<div class="product-item">🍰 ${i.name} <strong>₱${i.price}</strong></div>`;
+          }).join('');
+
+          itemsCell.innerHTML = `<div class="product-list">${itemsHtml}</div>`;
+          itemCountCell.textContent = itemCount;
+
+          // Total
+          const totalCell = row.insertCell(3);
+          totalCell.innerHTML = `<strong>₱${(Number(o.total) || 0).toFixed(2)}</strong>`;
+
+          // Status with color coding
+          const statusCell = row.insertCell(4);
+          const statusClass = o.status.toLowerCase().replace(/\s+/g, ' ');
+          statusCell.innerHTML = `<span class="status ${statusClass}">${o.status}</span>`;
+        });
+      }
+    }
+
+    // Load orders on page load
+    loadOrders();
+
+    // Refresh orders every 3 seconds to see staff updates
+    setInterval(loadOrders, 3000);
+    
+    // Shared cart helpers for header
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const el = document.getElementById('cartCount');
+      if (el) el.textContent = cart.length;
+    }
+
+    function toggleCart() {
+      const modal = document.getElementById('cartModal');
+      if (modal) modal.classList.toggle('active');
+      else window.location.href = 'shop.html';
+    }
+
+    // ensure cart count shown
+    document.addEventListener('DOMContentLoaded', updateCartCount);
+  </script>
+</body>
+</html>
